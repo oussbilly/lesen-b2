@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesen B2 — Prüfungstraining</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF9F5;
+    --paper-dim:#F0EEE6;
+    --navy:#16233F;
+    --navy-2:#233256;
+    --ochre:#C99A44;
+    --ochre-dim:#EADCC0;
+    --green:#3F7D58;
+    --green-dim:#E3EFE7;
+    --red:#A63D40;
+    --red-dim:#F4E3E2;
+    --ink:#1E2430;
+    --ink-soft:#5B6270;
+    --line:#DEDACB;
+    --radius:14px;
+    --serif: 'Source Serif 4', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{
+    max-width:720px;
+    margin:0 auto;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    padding:0 0 40px;
+  }
+
+  header.top{
+    background:var(--navy);
+    color:#fff;
+    padding:22px 20px 18px;
+    border-bottom:4px solid var(--ochre);
+  }
+  header.top .brand{
+    font-family:var(--serif);
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:0.2px;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  header.top .brand small{
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:500;
+    color:var(--ochre);
+    text-transform:none;
+  }
+  header.top .sub{
+    font-size:13px;
+    color:#B9C2D6;
+    margin-top:4px;
+  }
+
+  .teil-tabs{
+    display:flex;
+    gap:6px;
+    padding:14px 16px;
+    overflow-x:auto;
+    background:var(--paper-dim);
+    border-bottom:1px solid var(--line);
+  }
+  .teil-tab{
+    flex:0 0 auto;
+    padding:9px 14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:#fff;
+    color:var(--ink-soft);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:all .15s ease;
+  }
+  .teil-tab.active{
+    background:var(--navy);
+    border-color:var(--navy);
+    color:#fff;
+  }
+  .teil-tab .pct{
+    font-weight:500;
+    opacity:.75;
+    margin-left:5px;
+    font-size:11px;
+  }
+
+  main{
+    flex:1;
+    padding:22px 18px 10px;
+  }
+
+  .home-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+    margin-bottom:14px;
+  }
+  .home-card h2{
+    font-family:var(--serif);
+    font-size:19px;
+    margin:0 0 6px;
+  }
+  .home-card p{
+    font-size:14px;
+    color:var(--ink-soft);
+    line-height:1.55;
+    margin:0 0 14px;
+  }
+  .home-teil-list{
+    display:grid;
+    gap:10px;
+  }
+  .home-teil-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 16px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:border-color .15s ease;
+  }
+  .home-teil-row:hover{border-color:var(--ochre);}
+  .home-teil-row .name{font-weight:700; font-size:14.5px;}
+  .home-teil-row .desc{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+  .home-teil-row .badge{
+    font-size:12px;
+    font-weight:700;
+    color:var(--navy);
+    background:var(--ochre-dim);
+    padding:4px 10px;
+    border-radius:999px;
+    flex:0 0 auto;
+  }
+
+  .progress-wrap{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .progress-track{
+    flex:1;
+    height:8px;
+    background:var(--paper-dim);
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--ochre);
+    border-radius:999px;
+    transition:width .3s ease;
+  }
+  .progress-label{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ink-soft);
+    flex:0 0 auto;
+  }
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--navy);
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0 0 14px;
+  }
+
+  .qcard{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+    margin-bottom:16px;
+  }
+  .thema-tag{
+    display:inline-block;
+    font-size:12px;
+    font-weight:700;
+    color:var(--navy);
+    background:var(--ochre-dim);
+    padding:5px 11px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .qtext{
+    font-family:var(--serif);
+    font-size:18px;
+    line-height:1.5;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 4px;
+  }
+  .qhint{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-bottom:14px;
+  }
+
+  .options{display:grid; gap:10px; margin-top:14px;}
+  .option{
+    text-align:right;
+    padding:13px 16px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    font-size:14.5px;
+    cursor:pointer;
+    transition:all .12s ease;
+    font-family:var(--sans);
+    color:var(--ink);
+  }
+  .option:hover{border-color:var(--ochre);}
+  .option.correct{background:var(--green-dim); border-color:var(--green); color:#20452F;}
+  .option.wrong{background:var(--red-dim); border-color:var(--red); color:#5C2224;}
+  .option.disabled{pointer-events:none; opacity:.65;}
+  .option.disabled.correct, .option.disabled.wrong{opacity:1;}
+
+  .order-list{display:grid; gap:9px; margin-top:10px;}
+  .order-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    font-size:14px;
+    cursor:grab;
+    user-select:none;
+  }
+  .order-item.dragging{opacity:.4;}
+  .order-item .num{
+    flex:0 0 auto;
+    width:24px; height:24px;
+    border-radius:50%;
+    background:var(--navy);
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .order-item.correct{background:var(--green-dim); border-color:var(--green);}
+  .order-item.wrong{background:var(--red-dim); border-color:var(--red);}
+  .drag-handle{margin-inline-start:auto; color:var(--ink-soft); font-size:16px; flex:0 0 auto;}
+
+  .match-cols{display:flex; gap:10px; margin-top:10px;}
+  .match-col{flex:1; display:grid; gap:9px; min-width:0;}
+  .match-item{
+    padding:11px 12px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    font-size:13px;
+    line-height:1.4;
+    cursor:pointer;
+    transition:all .12s ease;
+    min-height:52px;
+    display:flex;
+    align-items:center;
+  }
+  .match-item.selected{border-color:var(--navy); background:var(--ochre-dim);}
+  .match-item.matched-correct{background:var(--green-dim); border-color:var(--green); pointer-events:none;}
+  .match-item.matched-wrong{background:var(--red-dim); border-color:var(--red);}
+  .match-item.used{opacity:.4; pointer-events:none;}
+
+  .ms-grid{display:grid; gap:9px; margin-top:10px;}
+  .ms-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    font-size:14px;
+    cursor:pointer;
+  }
+  .ms-item .order-badge{
+    flex:0 0 auto;
+    width:24px; height:24px;
+    border-radius:50%;
+    border:1.5px solid var(--ink-soft);
+    color:var(--ink-soft);
+    font-size:12px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .ms-item.picked .order-badge{background:var(--navy); border-color:var(--navy); color:#fff;}
+  .ms-item.correct{background:var(--green-dim); border-color:var(--green);}
+  .ms-item.wrong{background:var(--red-dim); border-color:var(--red);}
+  .ms-item.disabled{pointer-events:none;}
+
+  /* teil1: person legend + rows with A/B/C/D */
+  .legend-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:8px;
+    margin:12px 0 18px;
+  }
+  .legend-card{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    padding:10px 12px;
+    background:var(--paper-dim);
+    border-radius:10px;
+    border:1.5px solid var(--line);
+  }
+  .legend-letter{
+    flex:0 0 auto;
+    width:26px; height:26px;
+    border-radius:50%;
+    background:var(--navy);
+    color:#fff;
+    font-size:12.5px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:1px;
+  }
+  .legend-name{font-size:13.5px; font-weight:600; line-height:1.45;}
+  .legend-kw{font-size:12.5px; font-weight:400; color:var(--ink-soft);}
+  .t1-row{
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .t1-row:last-child{border-bottom:none;}
+  .t1-qtext{
+    font-size:14.5px;
+    line-height:1.5;
+    margin:0 0 10px;
+    font-weight:500;
+  }
+  .t1-choices{display:flex; gap:8px; flex-wrap:wrap;}
+  .t1-choice{
+    flex:0 0 auto;
+    min-width:44px;
+    padding:9px 0;
+    text-align:center;
+    border-radius:8px;
+    border:1.5px solid var(--line);
+    background:var(--paper);
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .t1-choice.correct{background:var(--green-dim); border-color:var(--green); color:#20452F;}
+  .t1-choice.wrong{background:var(--red-dim); border-color:var(--red); color:#5C2224;}
+  .t1-choice.disabled{pointer-events:none; opacity:.7;}
+  .t1-choice.disabled.correct, .t1-choice.disabled.wrong{opacity:1;}
+
+  .controls{
+    display:flex;
+    gap:10px;
+    margin-top:6px;
+  }
+  .btn{
+    flex:1;
+    padding:13px 16px;
+    border-radius:10px;
+    border:none;
+    font-size:14.5px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:var(--sans);
+  }
+  .btn-primary{background:var(--navy); color:#fff;}
+  .btn-primary:disabled{background:#B8BEC9; cursor:not-allowed;}
+  .btn-ghost{background:var(--paper-dim); color:var(--ink); border:1px solid var(--line);}
+
+  .feedback{
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:10px;
+    font-size:13.5px;
+    line-height:1.5;
+    display:none;
+  }
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--green-dim); color:#20452F;}
+  .feedback.bad{background:var(--red-dim); color:#5C2224;}
+
+  .result-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:30px 24px;
+    text-align:center;
+  }
+  .result-card .big{
+    font-family:var(--serif);
+    font-size:44px;
+    font-weight:700;
+    color:var(--navy);
+    margin:6px 0 2px;
+  }
+  .result-card .label{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin-bottom:20px;
+  }
+
+  ::-webkit-scrollbar{height:6px; width:6px;}
+  ::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px;}
+
+  @media (max-width:480px){
+    .qtext{font-size:16.5px;}
+    .match-item{font-size:12.5px; padding:10px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">Lesen <small>B2 · Goethe-Zertifikat</small></div>
+    <div class="sub">Prüfungstraining — Leseverstehen, alle fünf Teile</div>
+  </header>
+
+  <nav class="teil-tabs" id="teilTabs"></nav>
+
+  <main id="main"></main>
+</div>
+
+<script>
+/* =========================================================
+   DATA
+========================================================= */
+const DATA = {
+
+teil1: [
+  {thema:"Zufriedenheit im Job / Arbeitszufriedenheit",
+   persons:["Kyra","Johannes","Yanik","Michael"],
+   keywords:["Meine Eltern sind beide Angestellte.","Ich habe seit zwei Jahren als Bankkaufmann gearbeitet.","Heute bin ich fest Journalist.","Programmierer / Informatikstudium."],
+   questions:[
+     {q:"Für wen ist Geld nicht so wichtig?", p:0},
+     {q:"Wer schätzt die Entscheidung der Freiheit?", p:0},
+     {q:"Wer war in seinem früheren Job unglücklich?", p:1},
+     {q:"Wer wurde von seinem früheren Arbeitgeber entlassen?", p:1},
+     {q:"Wer hat eine Geschäftsidee für seine zukünftige Selbstständigkeit?", p:1},
+     {q:"Für wen spielt die Freude bei der Arbeit die große Rolle?", p:2},
+     {q:"Wem wurde sein ursprünglicher Plan ausgeredet?", p:2},
+     {q:"Wer lehnt die Gründung einer eigenen Firma ab?", p:3},
+     {q:"Wer bevorzugt unregelmäßige Arbeitszeiten?", p:3}
+   ]},
+  {thema:"Sammlung als Hobby",
+   persons:["Laura","Nino","Isabela","Mark"],
+   keywords:["Flohmarkt.","Hulk und Batman.","Spiegel-Sammlung.","Fußball / Promi-Unterschriften."],
+   questions:[
+     {q:"Wer sucht oft im Internet nach guten Angeboten?", p:0},
+     {q:"Wer hat ein Familienmitglied mit dem gleichen Hobby?", p:1},
+     {q:"Wer sammelt seit Kurzem etwas Neues?", p:1},
+     {q:"Wer bearbeitet die einzelnen Sammlungsstücke kreativ?", p:1},
+     {q:"Wer hat die Idee für sein Hobby aus den Medien?", p:2},
+     {q:"Wer möchte bald mit der Sammlung aufhören?", p:2},
+     {q:"Wer hat Freunde mit dem gleichen Hobby?", p:2},
+     {q:"Wer stellt seine Sammlungsaktivität auch im Netz dar?", p:3},
+     {q:"Wer kommt durch sein Hobby mit Prominenten in Kontakt?", p:3}
+   ]},
+  {thema:"Kompletter Neustart / Berufswechsel",
+   persons:["Ludwig","Herbert","Marino","Laora"],
+   keywords:["Bier trinken als Hobby.","Versicherungsfirma / Lokführer.","400-Euro-Job / Hochzeitsplanungsunternehmen.","Kundenberater / Callcenter / Kommunikation."],
+   questions:[
+     {q:"Wer möchte sein Hobby zum Beruf?", p:0},
+     {q:"Wer freut sich über zufriedene Kunden?", p:0},
+     {q:"Wer wünscht sich eine sichere Lebensgrundlage?", p:1},
+     {q:"Wer schätzt seine Arbeitskollegen?", p:1},
+     {q:"Wer arbeitet heute länger als früher?", p:2},
+     {q:"Wer arbeitet meist am Abend und am Wochenende?", p:2},
+     {q:"Wer ist stolz auf das Erreichte?", p:2},
+     {q:"Wer möchte eine Familie gründen?", p:3},
+     {q:"Seine Veränderungen waren relativ gering.", p:3}
+   ]},
+  {thema:"Geld sparen / Das liebe Geld",
+   persons:["Alexander","Marakay","Silia","Olaf"],
+   keywords:["Kinder in Entwicklungsländern / seine Frau ist schwanger.","Teure Autos wie Ferrari und BMW.","Sparen für ein konkretes Ziel (lässt sich beraten).","Hilft seiner Großmutter bei Wohltätigkeiten."],
+   questions:[
+     {q:"Wer findet Geldanlage riskant?", p:0},
+     {q:"Wer spart an den Kosten fürs Ausgehen?", p:0},
+     {q:"Wer möchte im Luxus leben?", p:1},
+     {q:"Wer stört sich über höhere Preise?", p:1},
+     {q:"Wer will seinen Kindern beibringen, Geld zu sparen?", p:1},
+     {q:"Wer spart Geld für bestimmte Zwecke / konkrete Ziele?", p:2},
+     {q:"Wer lässt sich in Finanzfragen beraten?", p:2},
+     {q:"Wer lehnt Geldsparen ab?", p:3},
+     {q:"Wer verliert die Möglichkeit, Geld zu sparen?", p:3}
+   ]},
+  {thema:"Traumreise, Urlaub",
+   persons:["Felix","Lorenz","Alexandra","Lara"],
+   keywords:["Reise nach Afrika (Löwen).","Fahrt mit dem Familienauto irgendwohin.","Reise nach Indien / Sehenswürdigkeiten in Indien.","Arbeiten auf einem Schiff."],
+   questions:[
+     {q:"Wer hat den Traum der Reise?", p:0},
+     {q:"Wessen Erwartungen wurden enttäuscht?", p:0},
+     {q:"Bei wem war eine Fernsehsendung der Grund für den Reisewunsch?", p:0},
+     {q:"Wer hat ein tolles Erlebnis gehabt?", p:1},
+     {q:"Wer war mit dem Wohnmobil unterwegs?", p:1},
+     {q:"Wem wurde die Reise geschenkt?", p:2},
+     {q:"Wer war im Urlaub immer mit Einheimischen zusammen?", p:2},
+     {q:"Für wen sind Reise und Arbeit miteinander verbunden?", p:3},
+     {q:"Wer interessiert sich für Transportmittel?", p:3}
+   ]},
+  {thema:"Auszeit (eine Pause vom Job)",
+   persons:["Nikola","Brigit","Harold","Jakob"],
+   keywords:["Spanischkurs im Ausland / Reise nach Südamerika.","Buchhalterin / Krankenschwester / Pflege studieren.","4 Jahre als IT-Berater — Familie und Arbeit sind beide wichtig.","Ein Jahr Urlaub bekommen."],
+   questions:[
+     {q:"Wer ließ sich professionell beraten?", p:0},
+     {q:"Wer hat Probleme mit Kollegen?", p:0},
+     {q:"Für wen steht die berufliche Zukunft im Vordergrund?", p:0},
+     {q:"Wer denkt nach der Rückkehr an einen Berufswechsel?", p:1},
+     {q:"Wer hat familiäre Schwierigkeiten?", p:1},
+     {q:"Wer jobte ab und zu während der Auszeit?", p:2},
+     {q:"Wer lernte neue Seiten von sich kennen?", p:2},
+     {q:"Wer ist sein Arbeitgeber gegen die Auszeit?", p:3},
+     {q:"Wer plant eine weitere Auszeit?", p:3},
+     {q:"Wessen Arbeitgeber stellt sich gegen seine Auszeit?", p:3}
+   ]}
+],
+
+teil2: [
+  {thema:"Messen in Deutschland", items:[
+    "Als Mutter aller Messen gilt die Leipziger Messe.",
+    "Eine Blütezeit der Messen waren die sogenannten Wirtschaftswunderjahre.",
+    "Endlich konnte sich auch der Arbeiter wieder etwas leisten.",
+    "Für viele Besucher ist so ein Messerundgang ungefähr das Gleiche wie ein Stadtbummel.",
+    "Deutsche Messen sind aber auch ein erfolgreicher Exportartikel.",
+    "Hier kommt der menschliche Faktor ins Spiel."
+  ]},
+  {thema:"Online studieren", items:["Abitur","Jede Frage","Gruppenarbeit","Begeistert","Ziel","Außerdem"]},
+  {thema:"Plattform / Online bestellen und Verkauf", items:["Selbst gemacht","Verpassen","Hektisch","Hobby / Freizeit","Gesundes Essen","Land"]},
+  {thema:"Bildung und Talent / Keine Chancen für Talent", items:[
+    "c – Die Entwicklung spezieller Begabungen wird nämlich durch den Zwang zu einem guten Notendurchschnitt behindert.",
+    "d – Andere Themen dagegen interessieren sie überhaupt nicht.",
+    "h – Doch die störten ihn überhaupt nicht.",
+    "f – Der standardisierte Durchschnitt steht also im Vordergrund.",
+    "a – Einige Wissenschaftler teilen seine Ansichten.",
+    "e – Ein Grund für diese Entwicklung sollen auch die Arbeitgeber sein."
+  ]},
+  {thema:"Unterschiedliche Alter arbeiten zusammen", items:["Ansicht / -ung","Konflikt","Perspektive","Unproduktivität","Einkommen / Gehalt","Es muss alle Gruppen gleich behandeln"]},
+  {thema:"Teilen im Leben", items:["Schließlich","Bus / U-Bahn","Fremde Menschen","Warum","Tragen / getragen","Meist in kleinen"]}
+],
+
+teil3: [
+  {thema:"Pflegestudiengänge", questions:[
+    {stem:"... bessere Arbeitsbedingungen ...", correct:"Interesse erhöhen.", wrong:["Das Gehalt senken.","Die Ausbildung verkürzen."]},
+    {stem:"...zwei...", correct:"Einrichtung gemacht werden.", wrong:["Prüfungen abgeschafft werden.","Studienplätze reduziert werden."]},
+    {stem:"... Medizin und Management ...", correct:"Vielzahl von Arbeitsmöglichkeiten.", wrong:["Nur eine einzige Berufsoption.","Wenig Zukunftsperspektiven."]},
+    {stem:"... Bachelor und Arbeitserfahrung ...", correct:"Pflegeberuf.", wrong:["Ingenieurberuf.","Lehrerberuf."]},
+    {stem:"... Karriere ...", correct:"Gibt kreative berufliche Chancen.", wrong:["Bietet keine Aufstiegsmöglichkeiten.","Führt zu einem festen, unveränderlichen Weg."]},
+    {stem:"... sechs ...", correct:"Freude von Hilfsmenschen.", wrong:["Frustration im Berufsalltag.","Wenig Kontakt zu Patienten."]}
+  ]},
+  {thema:"Benachteiligung — Soziale Benachteiligung macht krank", questions:[
+    {stem:"Der entscheidende Grund für die häufigen Erkrankungen sozial Benachteiligter ...", correct:"ist die soziale Außenseiterrolle.", wrong:["ist die schlechte Ernährung.","ist der Mangel an Ärzten."]},
+    {stem:"Soziale schwächer Gestellte haben Stress, weil ...", correct:"es an Anerkennung für ihre Tätigkeit fehlt.", wrong:["sie zu viel Freizeit haben.","sie keine sozialen Kontakte suchen."]},
+    {stem:"Das Gefühl, anders zu sein, hat zur Folge, dass ...", correct:"das soziale Leben sehr eingeschränkt wird.", wrong:["man neue Freunde findet.","man sich beruflich schneller entwickelt."]},
+    {stem:"Man meint, dass geförderte Kinder ...", correct:"entdecken, was in ihnen steckt.", wrong:["sich stärker isolieren.","die Schule öfter schwänzen."]},
+    {stem:"In dem Wormser Projekt ...", correct:"werden Aktivitäten von Kindern gefördert.", wrong:["werden nur Erwachsene unterstützt.","wird ausschließlich Geld verteilt."]},
+    {stem:"Die bisherigen Angebote zur Gesundheitsvorsorge ...", correct:"nutzten überwiegend die sozial besser Gestellten.", wrong:["erreichten vor allem sozial Benachteiligte.","wurden von niemandem genutzt."]}
+  ]},
+  {thema:"Alle unter einem Dach — Zusammenleben-Projekt", questions:[
+    {stem:"Idee von Alt und Jung?", correct:"Nachbarn", wrong:["Familie","Kollegen"]},
+    {stem:"Ruhe und Zeit?", correct:"Zukunft hat.", wrong:["Vergangenheit angehört.","keine Bedeutung hat."]},
+    {stem:"... mag, dass? Jederzeit allein.", correct:"sein kann.", wrong:["nie möglich ist.","nur selten vorkommt."]},
+    {stem:"Preiskosten", correct:"Verhältnis", wrong:["Festpreis","Rabatt"]},
+    {stem:"Unterschiedliche Wohnformen", correct:"nach ... Wünsche.", wrong:["nach festen Vorgaben.","nach Zufall."]},
+    {stem:"Potenzial bleiben", correct:"bleiben.", wrong:["verschwinden.","sich verringern."]}
+  ]},
+  {thema:"Lichteffekt auf Hormone", questions:[
+    {stem:"Der Ländervergleich verweist auf …", correct:"die Bedeutung von Helligkeit für das Wohlbefinden.", wrong:["die Bedeutung der Ernährung für das Wohlbefinden.","die Rolle des Klimas für die Gesundheit."]},
+    {stem:"Die nächtliche Beleuchtung der Großstädte …", correct:"bringt den Hormonhaushalt durcheinander.", wrong:["verbessert den Schlaf der Bewohner.","hat keinen Einfluss auf den Körper."]},
+    {stem:"Der Artikel erklärt, dass Melatonin und Serotonin …", correct:"in einer Wechselbeziehung zueinander stehen.", wrong:["völlig unabhängig voneinander wirken.","beide schädlich für den Körper sind."]},
+    {stem:"Die meisten Ärzte meinen, dass eine vernünftige Ernährung …", correct:"ausreichend Serotonin enthält.", wrong:["keinen Einfluss auf den Hormonhaushalt hat.","Melatonin vollständig ersetzen kann."]},
+    {stem:"Ein Aufenthalt im Freien …", correct:"erhöht die Abwehrkraft.", wrong:["schwächt das Immunsystem.","hat keine gesundheitlichen Vorteile."]},
+    {stem:"Ärztliche Hilfe ist erforderlich, wenn ...", correct:"das Wohlbefinden für einen längeren Zeitraum gestört ist.", wrong:["man sich einmal müde fühlt.","das Wetter sich ändert."]}
+  ]},
+  {thema:"Digitale Selbstkontrolle / Smartwatch-App", questions:[
+    {stem:"Untersuchungen bezeichnen viele Nutzer der Apps als …", correct:"kritische Anwender.", wrong:["unkritische Mitläufer.","gelegentliche Nutzer ohne Interesse."]},
+    {stem:"Ein Anwender meint, dass er durch die Messung ...", correct:"erkennt, was gut für ihn ist.", wrong:["sich mehr Sorgen macht als vorher.","die App gar nicht mehr nutzen möchte."]},
+    {stem:"Die Selbstvermessung durch Apps bezeichnen Mediziner als …", correct:"Fortentwicklung bisherigen Verhaltens.", wrong:["gefährlichen Trend ohne Nutzen.","reine Zeitverschwendung."]},
+    {stem:"Ein interessanter Aspekt bei der Anwendung von Apps ist, dass ...", correct:"Vorsorgemaßnahmen besser umgesetzt werden.", wrong:["die Daten nie gespeichert werden.","Ärzte überflüssig werden."]},
+    {stem:"Anwender einer App sollten wissen, …", correct:"was mit den von ihnen eingegebenen Informationen passiert.", wrong:["dass ihre Daten niemals gespeichert werden.","dass die App keine Daten sammelt."]},
+    {stem:"Der Artikel kommt zu dem Schluss, dass …", correct:"man dem eigenen Körpergefühl vertrauen soll.", wrong:["man sich nur auf die App verlassen soll.","Apps das eigene Körpergefühl ersetzen können."]}
+  ]}
+],
+
+teil4: [
+  {thema:"Berufliche Weiterbildung", pairs:[
+    {a:"Weiterbildung ist Aufgabe des Arbeitgebers.", b:"Verena (Unternehmen, organisiert, bezahlt)"},
+    {a:"Weiterbildung ist ein lohnendes Geschäft.", b:"Paul (Kurse, Workshops)"},
+    {a:"Qualifikation schützt vor Arbeitslosigkeit.", b:"Felicitas (Fortbildung, Weiterbildung)"},
+    {a:"Weiterbildung ist mehr als berufliche Bildung.", b:"Julia (Allgemeinbildung)"},
+    {a:"Man muss sich an den Gesellschaftswandel anpassen.", b:"Lorenz (Veränderungen)"},
+    {a:"Weiterbildung ist wichtig für die Karriere.", b:"Michael (vorwärtskommen, aktuell)"}
+  ]},
+  {thema:"Schönheitsoperationen", pairs:[
+    {a:"Bei psychischen Problemen können Schönheitsoperationen helfen.", b:"Rebeca (Ohren)"},
+    {a:"Man lässt sich aus Konkurrenzgründen operieren.", b:"George (Beruf)"},
+    {a:"Jeder Mensch ist im Prinzip schön.", b:"Inge (hässlich)"},
+    {a:"Schönheitsoperationen sind bei Missbildungen richtig.", b:"Stephan (Unfall)"},
+    {a:"Operationen wegen eines aktuellen Schönheitsideals sind abzulehnen.", b:"Michael (römische Nase)"},
+    {a:"Das natürliche Gesicht zeigt etwas vom Charakter der Person.", b:"Ludwig (Gesicht, Geist)"}
+  ]},
+  {thema:"Wohnmini / Minihaus", pairs:[
+    {a:"Menschen brauchen zum Nachdenken Platz.", b:"Josefin (die Wände)"},
+    {a:"Freiheit gewinnen.", b:"Fabian (Investition, Haus kaufen, Kino)"},
+    {a:"Besitz gilt als veraltetes Besitzverhalten.", b:"Eleni (unterwegs, Generation)"},
+    {a:"Kleine Häuser stellen eine Herausforderung für Familien dar, die viele Kinder haben.", b:"Max (Kinder, Herausforderungen)"},
+    {a:"Leben ohne Luxus.", b:"Tima (ausreichend Luxus)"},
+    {a:"Plätze für die schönen Dinge.", b:"Susan (Rentner)"}
+  ]},
+  {thema:"Idol oder Vorbild", pairs:[
+    {a:"Niemand ist ohne Fehler.", b:"Marcos (perfekt)"},
+    {a:"Auch ein Idol darf Schwächen haben.", b:"Daniel (sich selbst treu bleiben)"},
+    {a:"Das gemeinsame Umfeld verbindet.", b:"Tugba (Erfolg)"},
+    {a:"Verhältnisse, Geld und Finanzen spielen eine Rolle.", b:"Merle (Vorbild)"},
+    {a:"Menschen in verschiedenen Lebensphasen brauchen unterschiedliche Vorbilder.", b:"Lili (Lebensphase)"},
+    {a:"Hat keine Funktion / kein Interesse an Idolen.", b:"Klara"}
+  ]},
+  {thema:"WG (Wohngemeinschaft)", pairs:[
+    {a:"Es lohnt sich, unabhängig zu sein.", b:"Jana (auf eigenen Beinen stehen)"},
+    {a:"Bereitschaft, mitzuzahlen.", b:"Nicolas (Haushalt und Geld)"},
+    {a:"Allein leben macht glücklich.", b:"Mona (nettes Gefühl mit Mitbewohnern)"},
+    {a:"Eine Wohngemeinschaft ist keine Familie.", b:"Daniel (Geschwister)"},
+    {a:"Allein leben, ohne einsam zu sein.", b:"Susan"},
+    {a:"Studieren ist wichtiger als die Wohnform.", b:"Max (später)"}
+  ]},
+  {thema:"Sportleistung / hoher Verdienst im Profisport", pairs:[
+    {a:"Leistung muss belohnt werden.", b:"Lorenz (Vergleich)"},
+    {a:"Sportarten werden unterschiedlich bewertet.", b:"Martin (Boxer, Volleyballspieler)"},
+    {a:"Profisportler verdienen nur wenige Jahre.", b:"Marlene (Spritze)"},
+    {a:"Das Verhältnis von Leistung und Verdienst stimmt nicht.", b:"Leno (Olympia)"},
+    {a:"Höherer Verdienst führt zu Betrug.", b:"Fabian (Doping)"},
+    {a:"Der Breitensport wird vernachlässigt.", b:"Ritter"}
+  ]},
+  {thema:"Arbeitsbedingungen und Mitarbeiterproduktivität", pairs:[
+    {a:"Das Maß der Flexibilität hängt von der Tätigkeit ab.", b:"Martin (arbeitet im Produktionsbereich)"},
+    {a:"Feste Anwesenheitszeiten im Büro widersprechen der Globalisierung.", b:"Tobias (internationale Kollegen)"},
+    {a:"Es geht um das Resultat, nicht um die Anwesenheit im Büro.", b:"Paula (nicht nur am Schreibtisch sitzen)"},
+    {a:"Gute Arbeitskräfte wollen ein flexibles Arbeitsmodell.", b:"Merle (qualifizierte Leute gewinnen)"},
+    {a:"Der Betriebsablauf erfordert es.", b:"Anton (muss erreichbar sein)"},
+    {a:"Arbeit von zu Hause erfordert gute Planung.", b:"Felix (organisierter Plan)"}
+  ]}
+],
+
+teil5: [
+  {thema:"Verein — Satzung des TSV 1879", correct:["Zielsetzung des Vereins.","Entschädigung für Vereinstätigkeit.","Schutz persönlicher Daten."],
+   wrong:["Regeln für die Vereinsgründung.","Aufnahme neuer Mitglieder.","Sponsoring und Werbung.","Organisation von Vereinsfesten.","Wahl des Vorstands."]},
+  {thema:"Bibliothek — Nutzungs- und Entgeltordnung", correct:["Haftung des Ausweisinhabers.","Dauer der Ausleihe.","Umgang mit Medien."],
+   wrong:["Öffnungszeiten der Bibliothek.","Anschaffung neuer Bücher.","Ruhezonen im Lesesaal.","Internetnutzung vor Ort.","Anmeldung für Veranstaltungen."]},
+  {thema:"Reiseveranstalter", correct:["Preisänderung.","Sonderkündigungsrecht.","Rechte des Kunden."],
+   wrong:["Auswahl der Unterkunft.","Visabestimmungen.","Reiseversicherung.","Gepäckbeschränkungen.","Buchung von Ausflügen."]},
+  {thema:"Bankkonto oder mobiler Vertrag", correct:["Vertragslaufzeit.","Zahlungsweise.","Allgemeine Bedingungen."],
+   wrong:["Kontoeröffnung online.","Kundenservice-Hotline.","Werbeaktionen für Neukunden.","Vergleich der Anbieter.","Wechsel des Anbieters."]},
+  {thema:"Hotelordnung", correct:["Gemeinschaftsräume.","Verhalten im Zimmer.","Abreisen."],
+   wrong:["Frühstückszeiten.","Zimmerpreise.","Reservierungsbedingungen.","Zusatzleistungen und Spa.","Anreise und Check-in."]},
+  {thema:"Sporthalle", correct:["Haftung / Nutzungsberechtigung.","Gemeinsame Nutzung.","Kleidungsordnung und Sauberkeit."],
+   wrong:["Öffnungszeiten der Halle.","Buchung von Zeitfenstern.","Ausleihe von Sportgeräten.","Kosten für externe Gruppen.","Erste-Hilfe-Ausstattung."]},
+  {thema:"Haus und Bad", correct:["Hinweise zum Verhalten.","Haftungsbestimmung.","Hausrecht und Verbot."],
+   wrong:["Öffnungszeiten des Hauses.","Kosten für Gäste.","Renovierungsarbeiten.","Anmeldung neuer Bewohner.","Nutzung der Gemeinschaftsräume."]},
+  {thema:"Schwimmbad", correct:["Körperreinigung.","Wertgegenstände.","Haftungsbestimmung."],
+   wrong:["Öffnungszeiten und Preise.","Schwimmkurse für Kinder.","Beckentemperatur.","Personal und Aufsicht.","Anmeldung für Vereine."]}
+]
+};
+
+const TEIL_META = [
+  {key:"teil1", label:"Teil 1", desc:"Wer sagt was? — A/B/C/D"},
+  {key:"teil2", label:"Teil 2", desc:"Reihenfolge — Drag & Drop"},
+  {key:"teil3", label:"Teil 3", desc:"Zuordnung — 3 Antworten"},
+  {key:"teil4", label:"Teil 4", desc:"Zuordnen — Aussage & Person"},
+  {key:"teil5", label:"Teil 5", desc:"3 Punkte — richtige Reihenfolge"}
+];
+
+/* =========================================================
+   STATE
+========================================================= */
+let state = {
+  view: "home",
+  teilKey: null,
+  itemIndex: 0,
+  score: 0,
+  total: 0,
+  answered: false
+};
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function saveProgress(teilKey, pct){
+  try{ localStorage.setItem("b2v2_"+teilKey, pct); }catch(e){}
+}
+function loadProgress(teilKey){
+  try{ return parseInt(localStorage.getItem("b2v2_"+teilKey) || "0"); }catch(e){ return 0; }
+}
+
+function buildRounds(teilKey){
+  const themen = DATA[teilKey];
+  if(teilKey === "teil1"){
+    return themen.map(t => ({thema:t.thema, persons:t.persons, keywords:t.keywords, questions:t.questions}));
+  }
+  const rounds = [];
+  if(teilKey === "teil3"){
+    themen.forEach(t => t.questions.forEach(q => rounds.push({thema:t.thema, ...q})));
+  } else if(teilKey === "teil2"){
+    themen.forEach(t => rounds.push({thema:t.thema, items:t.items}));
+  } else if(teilKey === "teil4"){
+    themen.forEach(t => rounds.push({thema:t.thema, pairs:t.pairs}));
+  } else if(teilKey === "teil5"){
+    themen.forEach(t => rounds.push({thema:t.thema, items:t.correct}));
+  }
+  return rounds;
+}
+
+function countUnits(teilKey){
+  const themen = DATA[teilKey];
+  if(teilKey === "teil1") return themen.reduce((s,t)=>s+t.questions.length,0);
+  return buildRounds(teilKey).length;
+}
+
+/* =========================================================
+   RENDER: shell (tabs)
+========================================================= */
+function renderTabs(){
+  const wrap = document.getElementById("teilTabs");
+  wrap.innerHTML = "";
+  const homeBtn = document.createElement("button");
+  homeBtn.className = "teil-tab" + (state.view==="home" ? " active" : "");
+  homeBtn.textContent = "Start";
+  homeBtn.onclick = () => goHome();
+  wrap.appendChild(homeBtn);
+
+  TEIL_META.forEach(tm => {
+    const pct = loadProgress(tm.key);
+    const b = document.createElement("button");
+    b.className = "teil-tab" + (state.teilKey===tm.key && state.view==="teil" ? " active" : "");
+    b.innerHTML = tm.label + (pct ? `<span class="pct">${pct}%</span>` : "");
+    b.onclick = () => startTeil(tm.key);
+    wrap.appendChild(b);
+  });
+}
+
+function goHome(){
+  state.view = "home";
+  renderTabs();
+  renderHome();
+}
+
+function renderHome(){
+  const main = document.getElementById("main");
+  main.innerHTML = `
+    <div class="home-card">
+      <h2>Wähle einen Teil</h2>
+      <p>Fünf Übungsformen wie im Goethe-Zertifikat B2, Leseverstehen. Wähle einen Teil, um zu starten.</p>
+      <div class="home-teil-list" id="homeList"></div>
+    </div>
+  `;
+  const list = document.getElementById("homeList");
+  TEIL_META.forEach(tm => {
+    const n = countUnits(tm.key);
+    const pct = loadProgress(tm.key);
+    const row = document.createElement("div");
+    row.className = "home-teil-row";
+    row.innerHTML = `
+      <div>
+        <div class="name">${tm.label}</div>
+        <div class="desc">${tm.desc} · ${n} Aufgaben</div>
+      </div>
+      <div class="badge">${pct ? pct+"%" : "Start"}</div>
+    `;
+    row.onclick = () => startTeil(tm.key);
+    list.appendChild(row);
+  });
+}
+
+/* =========================================================
+   TEIL RUNNER
+========================================================= */
+function startTeil(teilKey){
+  state.view = "teil";
+  state.teilKey = teilKey;
+  state.rounds = buildRounds(teilKey);
+  state.itemIndex = 0;
+  state.score = 0;
+  state.total = state.rounds.length;
+  state.subScore = 0;
+  state.subTotal = 0;
+  state.answered = false;
+  renderTabs();
+  renderRound();
+}
+
+function progressPct(){
+  return Math.round((state.itemIndex/state.total)*100);
+}
+
+function renderProgressBar(){
+  const label = state.teilKey === "teil1" ? "Thema" : "Aufgabe";
+  return `
+    <button class="back-link" onclick="goHome()">‹ Zur Übersicht</button>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" style="width:${progressPct()}%"></div></div>
+      <div class="progress-label">${label} ${state.itemIndex}/${state.total}</div>
+    </div>
+  `;
+}
+
+function nextRound(){
+  state.itemIndex++;
+  state.answered = false;
+  if(state.itemIndex >= state.total){
+    let pct;
+    if(state.teilKey === "teil1"){
+      pct = Math.round((state.subScore/state.subTotal)*100);
+    } else {
+      pct = Math.round((state.score/state.total)*100);
+    }
+    saveProgress(state.teilKey, pct);
+    renderTabs();
+    renderResult(pct);
+  } else {
+    renderRound();
+  }
+}
+
+function renderResult(pct){
+  const meta = TEIL_META.find(t=>t.key===state.teilKey);
+  const main = document.getElementById("main");
+  const label = state.teilKey === "teil1" ? `${state.subScore} von ${state.subTotal} richtig` : `${state.score} von ${state.total} richtig`;
+  main.innerHTML = `
+    ${renderProgressBar()}
+    <div class="result-card">
+      <div style="font-size:13px;color:var(--ink-soft);font-weight:600;">${meta.label} abgeschlossen</div>
+      <div class="big">${pct}%</div>
+      <div class="label">${label}</div>
+      <div class="controls">
+        <button class="btn btn-ghost" onclick="goHome()">Zur Übersicht</button>
+        <button class="btn btn-primary" onclick="startTeil('${state.teilKey}')">Nochmal üben</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderRound(){
+  const round = state.rounds[state.itemIndex];
+  const teilKey = state.teilKey;
+  if(teilKey === "teil1") renderTeil1(round);
+  else if(teilKey === "teil2") renderOrdering(round);
+  else if(teilKey === "teil3") renderMCQ(round, 3);
+  else if(teilKey === "teil4") renderMatching(round);
+  else if(teilKey === "teil5") renderOrdering(round);
+}
+
+/* ---------- TEIL 1: Wer sagt was? (A/B/C/D) ---------- */
+function renderTeil1(round){
+  const letters = ["A","B","C","D","E","F"];
+  const main = document.getElementById("main");
+  const legendHtml = round.persons.map((name,i) => `
+    <div class="legend-card">
+      <span class="legend-letter">${letters[i]}</span>
+      <span class="legend-name">${name}<br><span class="legend-kw">${round.keywords[i]}</span></span>
+    </div>
+  `).join("");
+
+  main.innerHTML = `
+    ${renderProgressBar()}
+    <div class="qcard">
+      <span class="thema-tag">${round.thema}</span>
+      <p class="qtext" style="font-size:15.5px;">Wer sagt was? Ordne jede Aussage der richtigen Person zu.</p>
+      <div class="legend-grid">${legendHtml}</div>
+      <div id="t1Rows"></div>
+      <div class="feedback" id="fb"></div>
+      <div class="controls" style="margin-top:16px;">
+        <button class="btn btn-primary" id="nextBtn" disabled onclick="nextRound()">Weiter</button>
+      </div>
+    </div>
+  `;
+
+  state._t1Questions = shuffle(round.questions);
+  state._t1AnsweredCount = 0;
+  state._t1PersonCount = round.persons.length;
+  state.subTotal += state._t1Questions.length;
+  renderT1Rows(letters);
+}
+
+function renderT1Rows(letters){
+  const wrap = document.getElementById("t1Rows");
+  wrap.innerHTML = "";
+  state._t1Questions.forEach((q, idx) => {
+    const row = document.createElement("div");
+    row.className = "t1-row";
+    const choicesHtml = state._t1Questions[idx]._letters === undefined ? "" : "";
+    row.innerHTML = `<p class="t1-qtext">${q.q}</p><div class="t1-choices" id="t1choices-${idx}"></div>`;
+    wrap.appendChild(row);
+    const choicesDiv = row.querySelector(`#t1choices-${idx}`);
+    for(let i=0;i<state._t1PersonCount;i++){
+      const btn = document.createElement("button");
+      btn.className = "t1-choice";
+      btn.textContent = letters[i];
+      btn.onclick = () => {
+        if(btn.classList.contains("disabled")) return;
+        const isCorrect = i === q.p;
+        if(isCorrect) state.subScore++;
+        const allBtns = choicesDiv.querySelectorAll(".t1-choice");
+        allBtns.forEach((b, bi) => {
+          b.classList.add("disabled");
+          if(bi === q.p) b.classList.add("correct");
+          else if(bi === i) b.classList.add("wrong");
+        });
+        state._t1AnsweredCount++;
+        if(state._t1AnsweredCount === state._t1Questions.length){
+          document.getElementById("nextBtn").disabled = false;
+          const fb = document.getElementById("fb");
+          fb.className = "feedback show ok";
+          fb.textContent = "Thema abgeschlossen — weiter zum nächsten Thema.";
+        }
+      };
+      choicesDiv.appendChild(btn);
+    }
+  });
+}
+
+/* ---------- TEIL 3: MCQ (3 options) ---------- */
+function renderMCQ(round, totalOptions){
+  const wrongPool = round.wrong.slice(0, totalOptions-1);
+  const options = shuffle([round.correct, ...wrongPool]);
+  const main = document.getElementById("main");
+  const qtext = round.q || round.stem;
+  main.innerHTML = `
+    ${renderProgressBar()}
+    <div class="qcard">
+      <span class="thema-tag">${round.thema}</span>
+      <p class="qtext">${qtext}</p>
+      <div class="options" id="opts"></div>
+      <div class="feedback" id="fb"></div>
+      <div class="controls" style="margin-top:16px;">
+        <button class="btn btn-primary" id="nextBtn" disabled onclick="nextRound()">Weiter</button>
+      </div>
+    </div>
+  `;
+  const optWrap = document.getElementById("opts");
+  options.forEach(optText => {
+    const el = document.createElement("button");
+    el.className = "option";
+    el.textContent = optText;
+    el.onclick = () => {
+      if(state.answered) return;
+      state.answered = true;
+      const isCorrect = optText === round.correct;
+      if(isCorrect) state.score++;
+      [...optWrap.children].forEach(c => {
+        c.classList.add("disabled");
+        if(c.textContent === round.correct) c.classList.add("correct");
+        else if(c===el) c.classList.add("wrong");
+      });
+      const fb = document.getElementById("fb");
+      fb.className = "feedback show " + (isCorrect ? "ok" : "bad");
+      fb.textContent = isCorrect ? "Richtig!" : "Nicht ganz — richtig ist: " + round.correct;
+      document.getElementById("nextBtn").disabled = false;
+    };
+    optWrap.appendChild(el);
+  });
+}
+
+/* ---------- TEIL 2: Ordering (drag & drop) ---------- */
+function renderOrdering(round){
+  const correctOrder = round.items;
+  const shuffled = shuffle(correctOrder.map((text,i)=>({text, origIndex:i})));
+  const main = document.getElementById("main");
+  main.innerHTML = `
+    ${renderProgressBar()}
+    <div class="qcard">
+      <span class="thema-tag">${round.thema}</span>
+      <p class="qtext">Bringe die Elemente in die richtige Reihenfolge.</p>
+      <p class="qhint">Ziehe die Karten per Drag & Drop, um sie neu anzuordnen.</p>
+      <div class="order-list" id="orderList"></div>
+      <div class="feedback" id="fb"></div>
+      <div class="controls" style="margin-top:16px;">
+        <button class="btn btn-ghost" id="checkBtn" onclick="checkOrder()">Prüfen</button>
+        <button class="btn btn-primary" id="nextBtn" disabled onclick="nextRound()">Weiter</button>
+      </div>
+    </div>
+  `;
+  state._orderData = shuffled;
+  state._orderCorrect = correctOrder;
+  renderOrderList();
+}
+
+function renderOrderList(){
+  const list = document.getElementById("orderList");
+  list.innerHTML = "";
+  state._orderData.forEach((item, idx) => {
+    const el = document.createElement("div");
+    el.className = "order-item";
+    el.draggable = true;
+    el.dataset.idx = idx;
+    el.innerHTML = `<span class="num">${idx+1}</span><span>${item.text}</span><span class="drag-handle">⠿</span>`;
+    el.addEventListener("dragstart", e => {
+      el.classList.add("dragging");
+      e.dataTransfer.setData("text/plain", idx);
+    });
+    el.addEventListener("dragend", () => el.classList.remove("dragging"));
+    el.addEventListener("dragover", e => e.preventDefault());
+    el.addEventListener("drop", e => {
+      e.preventDefault();
+      const fromIdx = parseInt(e.dataTransfer.getData("text/plain"));
+      const toIdx = parseInt(el.dataset.idx);
+      if(fromIdx === toIdx) return;
+      const moved = state._orderData.splice(fromIdx,1)[0];
+      state._orderData.splice(toIdx,0,moved);
+      renderOrderList();
+    });
+    list.appendChild(el);
+  });
+}
+
+function checkOrder(){
+  if(state.answered) return;
+  state.answered = true;
+  const userOrder = state._orderData.map(x=>x.text);
+  const isCorrect = JSON.stringify(userOrder) === JSON.stringify(state._orderCorrect);
+  if(isCorrect) state.score++;
+  const items = document.querySelectorAll("#orderList .order-item");
+  items.forEach((el, i) => {
+    el.draggable = false;
+    if(userOrder[i] === state._orderCorrect[i]) el.classList.add("correct");
+    else el.classList.add("wrong");
+  });
+  const fb = document.getElementById("fb");
+  fb.className = "feedback show " + (isCorrect ? "ok" : "bad");
+  fb.textContent = isCorrect ? "Richtig! Die Reihenfolge stimmt." : "Nicht ganz. Richtige Reihenfolge: " + state._orderCorrect.map((t,i)=>(i+1)+". "+t).join(" ");
+  document.getElementById("checkBtn").disabled = true;
+  document.getElementById("nextBtn").disabled = false;
+}
+
+/* ---------- TEIL 4: Matching (tap-to-match) ---------- */
+function renderMatching(round){
+  const pairs = round.pairs;
+  const leftItems = pairs.map((p,i)=>({text:p.a, id:i}));
+  const rightItems = shuffle(pairs.map((p,i)=>({text:p.b, id:i})));
+  const main = document.getElementById("main");
+  main.innerHTML = `
+    ${renderProgressBar()}
+    <div class="qcard">
+      <span class="thema-tag">${round.thema}</span>
+      <p class="qtext">Ordne jede Aussage der passenden Person zu.</p>
+      <p class="qhint">Tippe zuerst auf eine Aussage links, dann auf die passende Person rechts.</p>
+      <div class="match-cols">
+        <div class="match-col" id="leftCol"></div>
+        <div class="match-col" id="rightCol"></div>
+      </div>
+      <div class="feedback" id="fb"></div>
+      <div class="controls" style="margin-top:16px;">
+        <button class="btn btn-primary" id="nextBtn" disabled onclick="nextRound()">Weiter</button>
+      </div>
+    </div>
+  `;
+  state._matchLeft = leftItems;
+  state._matchRight = rightItems;
+  state._matchSelectedLeft = null;
+  state._matchCorrectCount = 0;
+  state._matchTotal = pairs.length;
+  state._matchWrongOnce = false;
+  renderMatchCols();
+}
+
+function renderMatchCols(){
+  const left = document.getElementById("leftCol");
+  const right = document.getElementById("rightCol");
+  left.innerHTML = "";
+  right.innerHTML = "";
+  state._matchLeft.forEach(item => {
+    const el = document.createElement("div");
+    el.className = "match-item";
+    el.textContent = item.text;
+    el.dataset.id = item.id;
+    if(item.matched) el.classList.add("matched-correct","used");
+    if(state._matchSelectedLeft === item.id) el.classList.add("selected");
+    el.onclick = () => {
+      if(item.matched) return;
+      state._matchSelectedLeft = item.id;
+      renderMatchCols();
+    };
+    left.appendChild(el);
+  });
+  state._matchRight.forEach(item => {
+    const el = document.createElement("div");
+    el.className = "match-item";
+    el.textContent = item.text;
+    el.dataset.id = item.id;
+    if(item.matched) el.classList.add("matched-correct","used");
+    el.onclick = () => {
+      if(item.matched || state._matchSelectedLeft === null) return;
+      const leftId = state._matchSelectedLeft;
+      if(leftId === item.id){
+        item.matched = true;
+        state._matchLeft.find(l=>l.id===leftId).matched = true;
+        state._matchCorrectCount++;
+        state._matchSelectedLeft = null;
+        renderMatchCols();
+        if(state._matchCorrectCount === state._matchTotal){
+          finishMatching();
+        }
+      } else {
+        state._matchWrongOnce = true;
+        el.classList.add("matched-wrong");
+        setTimeout(()=>{ el.classList.remove("matched-wrong"); }, 500);
+        state._matchSelectedLeft = null;
+        renderMatchCols();
+      }
+    };
+    right.appendChild(el);
+  });
+}
+
+function finishMatching(){
+  state.answered = true;
+  if(!state._matchWrongOnce) state.score++;
+  const fb = document.getElementById("fb");
+  fb.className = "feedback show " + (!state._matchWrongOnce ? "ok" : "bad");
+  fb.textContent = !state._matchWrongOnce ? "Perfekt! Alle Paare richtig auf Anhieb zugeordnet." : "Gut gemacht — alle Paare sind jetzt richtig zugeordnet (mit ein paar Versuchen).";
+  document.getElementById("nextBtn").disabled = false;
+}
+
+/* ---------- TEIL 5: multi-select, 3 correct in order ---------- */
+function renderMultiOrdered(round){
+  const allOptions = shuffle([...round.correct.map(t=>({text:t,correct:true})), ...round.wrong.map(t=>({text:t,correct:false}))]);
+  const main = document.getElementById("main");
+  main.innerHTML = `
+    ${renderProgressBar()}
+    <div class="qcard">
+      <span class="thema-tag">${round.thema}</span>
+      <p class="qtext">Wähle die drei richtigen Antworten — in der richtigen Reihenfolge (1, 2, 3).</p>
+      <div class="ms-grid" id="msGrid"></div>
+      <div class="feedback" id="fb"></div>
+      <div class="controls" style="margin-top:16px;">
+        <button class="btn btn-ghost" id="checkBtn" onclick="checkMultiOrdered()" disabled>Prüfen</button>
+        <button class="btn btn-primary" id="nextBtn" disabled onclick="nextRound()">Weiter</button>
+      </div>
+    </div>
+  `;
+  state._msOptions = allOptions;
+  state._msPicked = [];
+  state._msCorrect = round.correct;
+  renderMsGrid();
+}
+
+function renderMsGrid(){
+  const grid = document.getElementById("msGrid");
+  grid.innerHTML = "";
+  state._msOptions.forEach((opt, idx) => {
+    const el = document.createElement("div");
+    el.className = "ms-item";
+    const pickedIdx = state._msPicked.indexOf(idx);
+    if(pickedIdx > -1) el.classList.add("picked");
+    el.innerHTML = `<span class="order-badge">${pickedIdx>-1 ? (pickedIdx+1) : ""}</span><span>${opt.text}</span>`;
+    el.onclick = () => {
+      if(state.answered) return;
+      if(pickedIdx > -1){
+        state._msPicked.splice(pickedIdx,1);
+      } else if(state._msPicked.length < 3){
+        state._msPicked.push(idx);
+      }
+      renderMsGrid();
+      document.getElementById("checkBtn").disabled = state._msPicked.length !== 3;
+    };
+    grid.appendChild(el);
+  });
+}
+
+function checkMultiOrdered(){
+  if(state.answered) return;
+  state.answered = true;
+  const pickedTexts = state._msPicked.map(i => state._msOptions[i].text);
+  const isCorrect = JSON.stringify(pickedTexts) === JSON.stringify(state._msCorrect);
+  if(isCorrect) state.score++;
+  const items = document.querySelectorAll("#msGrid .ms-item");
+  items.forEach((el, idx) => {
+    el.classList.add("disabled");
+    const pos = state._msCorrect.indexOf(state._msOptions[idx].text);
+    const pickedPos = state._msPicked.indexOf(idx);
+    if(pos > -1 && pickedPos === pos) el.classList.add("correct");
+    else if(pickedPos > -1) el.classList.add("wrong");
+  });
+  const fb = document.getElementById("fb");
+  fb.className = "feedback show " + (isCorrect ? "ok" : "bad");
+  fb.textContent = isCorrect ? "Richtig! Reihenfolge und Auswahl stimmen." : "Nicht ganz. Richtige Reihenfolge: " + state._msCorrect.map((t,i)=>(i+1)+". "+t).join(" ");
+  document.getElementById("checkBtn").disabled = true;
+  document.getElementById("nextBtn").disabled = false;
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+renderTabs();
+renderHome();
+</script>
+</body>
+</html>
